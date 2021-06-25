@@ -1,3 +1,5 @@
+var scanners_cards = {};
+
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover({
         sanitizeFn: function(content) {return content}
@@ -158,6 +160,16 @@ var status_events = {
     }
 }
 
+function getScannersData(){
+    scannersContainer = document.getElementById("scannersCardsContainer");
+    cards = scannersContainer.getElementsByClassName("card");
+
+    for (i = 0; i < cards.length; i++) {
+        scanner_id = cards[i].id
+        window[scanner_id]();
+    }
+}
+
 
 function submitAppTest(run_test=false) {
       $("#submit").html(`<span class="spinner-border spinner-border-sm"></span>`);
@@ -167,7 +179,6 @@ function submitAppTest(run_test=false) {
 
 //      Main variables
       var urls_params = [[], []]
-      var scanners_cards = {qualys: {}}
       var run_test = run_test
       var processing_cards = {"minimal_security_filter": null}
 
@@ -182,18 +193,7 @@ function submitAppTest(run_test=false) {
       })
 
 //      --Scanner's cards--
-//      Qualys
-      if ($("#qualys_checkbox").prop("checked")){
-        scanners_cards.qualys["qualys_profile_id"] = $("#qualys_profile_id").val()
-        scanners_cards.qualys["qualys_template_id"] = $("#qualys_template_id").val()
-        scanners_cards.qualys["scanner_type"] = $("input[name=scanner_type]:checked", "#qualys_scanner_type").val()
-        scanners_cards.qualys["scanner_pool"] = []
-
-        $("#scanner_pool .row").slice(1,).each(function(_, item) {
-            var scanner_pool = $(item).find('input[type=text]')
-            scanners_cards.qualys["scanner_pool"].push(scanner_pool.val())
-        })
-      }
+      getScannersData();
 
 //      --Processing's cards--
 //      Min security filter
