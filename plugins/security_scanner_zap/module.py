@@ -48,8 +48,6 @@ class Module(module.ModuleModel):
         ])
         # Register in app
         self.context.app.register_blueprint(bp)
-        from pprint import pprint
-        pprint(self.context.app.__dict__)
         # Register template slot callback
         self.context.slot_manager.register_callback("security_scanners", render_zap_card)
 

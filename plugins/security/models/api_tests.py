@@ -38,7 +38,7 @@ class SecurityTestsDAST(AbstractBaseMixin, Base):
     scanners_cards = Column(JSON)  # {<scanner>: {<scanner_params>}, ...}
     processing = Column(JSON)  # {<processing_card>: <value>, }
 
-    # region = Column(String(128), nullable=False)
+    region = Column(String(128), nullable=False, default="default")
     # bucket = Column(String(128), nullable=False)
     # last_run = Column(Integer)
     # job_type = Column(String(20))
@@ -272,7 +272,7 @@ class SecurityTestsDAST(AbstractBaseMixin, Base):
                 "container": container,
                 "execution_params": dumps(parameters),
                 "cc_env_vars": cc_env_vars,
-                # "channel": self.region
+                "channel": self.region
             }
             if "quality" in self.scanners_cards:
                 execution_json["quality_gate"] = "True"

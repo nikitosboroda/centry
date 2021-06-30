@@ -61,7 +61,7 @@ class Module(module.ModuleModel):
         )
         add_resource_to_api(
             self.context.api, SecuritySeedDispatcher,
-            "/security/<int:project_id>/<string:seed>"
+            "/tests/<int:project_id>/security/<string:seed>"
         )
 
     def deinit(self):  # pylint: disable=R0201
